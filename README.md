@@ -38,8 +38,8 @@ Thus, this concept eliminates a lot of presses. On Force Touch capable devices, 
 
 But let's see exactly how it compares to normal menus (for simplicity I will only use the word *cursor* for finger, mouse and Force down/up)
 
-Input type | **Traditional** | **Fluid Menu**
---------------- | --------------
+Input type | Traditional | Fluid Menu
+---------- | ----------- | ----------
 **Mouse/Trackpad** | down + up (right-click) - move - down/up | down - move - up
 **Force Touch** | down - wait - up - move - down/up | (force) down - move - up
 **Touch** | down - wait - up - move - down/up | down - wait - move - up
