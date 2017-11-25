@@ -1,4 +1,4 @@
-# fluid-menu
+# Fluid Menu
 Downright awesome menu interaction. WIP.
 
 Fluid Menu is a concept of how a menu interaction (context menus) could work. Its goal is to be
@@ -36,13 +36,15 @@ As you an see with the flow chart each of these input types allow the user to in
 
 Thus, this concept eliminates a lot of presses. On Force Touch capable devices, you skip the waiting, on mouse and trackpad devices you save one key-down and one key-up. On touch devices without Force Touch, they get additional feedback by the Context Circle, and get in the center of the interaction because their finger swipe opens the menu, not their waiting. And again, also on touch you save one key-down and one key-up because the finger never leave the screen during the interaction.
 
-But let's see exactly how it compares to normal menus (for simplicity I will only use the word *cursor* for finger, mouse and Force down/up)
+But let's see exactly how it compares to normal menu interactions.
 
 Input type | Traditional | Fluid Menu
 ---------- | ----------- | ----------
 **Mouse/Trackpad** | down + up (right-click) - move - down/up | down - move - up
 **Force Touch** | down - wait - up - move - down/up | (force) down - move - up
 **Touch** | down - wait - up - move - down/up | down - wait - move - up
+
+*down* means pressing the mouse button (without lifting it up again) or finger on the display. *up* means letting go from the mouse button or putting the finger away from the screen. *move* means moving your cursor/finger.
 
 # Prototype
 
