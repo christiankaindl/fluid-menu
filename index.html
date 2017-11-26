@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Fluid Menu</title>
+    <style media="screen">
+      body {
+        position: relative;
+      }
+      .test {
+        height: 80px;
+        width: 200px;
+        border-radius: 20px;
+        box-shadow: 0 3px 5px #EEE;
+        background-color: red;
+      }
+      #context-circle {
+        width: 40px;
+        height: 40px;
+        background-color: orange;
+        position: absolute;
+        display: none;
+        border-radius: 50%;
+      }
+      #context-menu {
+        width: 240px;
+        min-height: 20px;
+        background-color: #FFF8E7;
+        border-radius: 14px;
+        display: none;
+        box-shadow: 0 2px 5px #eee;
+        border: 1px solid lightgrey;
+        position: absolute;
+        -moz-user-select: none;
+      }
+      #context-menu ul {
+        padding-left: 0;
+        list-style-type: none;
+      }
+      #context-menu a {
+        text-decoration: none;
+        color: black;
+        padding: 10px 20px;
+        display: block;
+      }
+
+      #context-menu a:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test" data-long-press-delay="500">
+
+    </div>
+    <div id="context-circle">
+
+    </div>
+    <div id="context-menu">
+      <ul>
+        <li> <a href="https://github.com/christiankaindl/fluid-menu" target="_blank">Fluid Menu on GitHub</a> </li>
+        <li> <a href="#">Work in progress :)</a> </li>
+        <li> <a href="http://christiankaindl.at/" target="_blank">By Christian Kaindl</a> </li>
+      </ul>
+    </div>
+
+    <script defer type="text/javascript" src="long-press.min.js"></script>
+    <script defer type="text/javascript">
+      var MOVE_TRIGGER_THRESHOLD = 30;
+
+      var lastCoordinates = [];
+      var elem = document.getElementsByClassName("test")[0];
+      var menu = document.getElementById('context-menu');
+
+      elem.addEventListener("long-press", handle);
+      document.addEventListener('mousedown', updateCoordinates);
+
+      function handle(e) {
+        console.log(e, "handled!");
+
+        var circle = document.getElementById("context-circle");
+
+        circle.style.left = `${lastCoordinates[0] - 30}px`;
+        circle.style.top = `${lastCoordinates[1] - 30}px`;
+        circle.style.display = 'block';
+      }
+      var start = 0;
+      function updateCoordinates(e) {
+        lastCoordinates[0] = e.clientX;
+        lastCoordinates[1] = e.clientY;
+        console.log(lastCoordinates);
+
+        menu.style.left = `${lastCoordinates[0]-100}px`;
+        menu.style.top = `${lastCoordinates[1]}px`;
+        start = lastCoordinates[1];
+        menu.style.opacity = '0';
+        menu.style.display = 'block';
+
+        document.addEventListener('mouseup', removeMouseUp);
+        document.addEventListener('mousemove', test);
+
+        function removeMouseUp() {
+          document.removeEventListener('mousemove', test);
+        }
+
+        function test(e) {
+          // console.log((e.clientY - start));
+          let progress = Math.abs(e.clientY - start)/MOVE_TRIGGER_THRESHOLD;
+
+          progress > 1 ? progress=1 : progress;
+          console.log(progress);
+          menu.style.opacity = `${progress}`;
+
+          menu.style.top = `${(start + (progress * MOVE_TRIGGER_THRESHOLD))-40}px`;
+        }
+
+      }
+    </script>
+  </body>
+</html>
