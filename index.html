@@ -28,7 +28,7 @@
         background-color: #FFF8E7;
         border-radius: 14px;
         display: none;
-        box-shadow: 0 2px 5px #eee;
+
         border: 1px solid lightgrey;
         position: absolute;
         -moz-user-select: none;
@@ -45,7 +45,12 @@
       }
 
       #context-menu a:hover {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: #2196F3;
+        color: white;
+      }
+
+      #context-menu.active {
+        box-shadow: 0 2px 7px #eee;
       }
     </style>
   </head>
@@ -65,7 +70,18 @@
     </div>
 
     <script defer type="text/javascript" src="long-press.min.js"></script>
+    <script src="https://unpkg.com/popmotion/dist/popmotion.global.min.js"></script>
     <script defer type="text/javascript">
+
+    var menu = {
+      DOMElement,
+      status,
+      trigger() {
+
+      },
+
+    };
+
       var MOVE_TRIGGER_THRESHOLD = 30;
 
       var lastCoordinates = [];
@@ -76,7 +92,7 @@
       document.addEventListener('mousedown', updateCoordinates);
 
       function handle(e) {
-        console.log(e, "handled!");
+        // console.log(e, "handled!");
 
         var circle = document.getElementById("context-circle");
 
@@ -86,12 +102,13 @@
       }
       var start = 0;
       function updateCoordinates(e) {
+        console.log(e);
         lastCoordinates[0] = e.clientX;
         lastCoordinates[1] = e.clientY;
-        console.log(lastCoordinates);
+        // console.log(lastCoordinates);
 
         menu.style.left = `${lastCoordinates[0]-100}px`;
-        menu.style.top = `${lastCoordinates[1]}px`;
+        menu.style.top = `${lastCoordinates[1]-40}px`;
         start = lastCoordinates[1];
         menu.style.opacity = '0';
         menu.style.display = 'block';
@@ -105,13 +122,25 @@
 
         function test(e) {
           // console.log((e.clientY - start));
-          let progress = Math.abs(e.clientY - start)/MOVE_TRIGGER_THRESHOLD;
+          let progress = (e.clientY - start)/MOVE_TRIGGER_THRESHOLD;
 
           progress > 1 ? progress=1 : progress;
-          console.log(progress);
+          // console.log(progress);
           menu.style.opacity = `${progress}`;
 
           menu.style.top = `${(start + (progress * MOVE_TRIGGER_THRESHOLD))-40}px`;
+
+          if (progress == 1) {
+            finished();
+          }
+        }
+
+        function finished() {
+          document.removeEventListener('mouseup', removeMouseUp);
+          document.removeEventListener('mousemove', test);
+          menu.classList.add('active');
+
+
         }
 
       }
